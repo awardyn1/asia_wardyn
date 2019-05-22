@@ -1,0 +1,22 @@
+trim_galore --paired --illumina -q 20 --fastqc -o /home/asia/SC_1_KO_Rep_Enrich/fastq_trim \
+LCV2N1_1.fq.gz LCV2N1_2.fq.gz &
+
+trim_galore --paired --illumina -q 20 --fastqc -o /home/asia/SC_1_KO_Rep_Enrich/fastq_trim \
+LCV2N2_1.fq.gz LCV2N2_2.fq.gz &
+
+trim_galore --paired --illumina -q 20 --fastqc -o /home/asia/SC_1_KO_Rep_Enrich/fastq_trim \
+clone5N1_1.fq.gz clone5N1_2.fq.gz & 
+
+trim_galore --paired --illumina -q 20 --fastqc -o /home/asia/SC_1_KO_Rep_Enrich/fastq_trim \
+clone5N2_1.fq.gz clone5N2_2.fq.gz &
+
+trim_galore --paired --illumina -q 20 --fastqc -o /home/asia/SC_1_KO_Rep_Enrich/fastq_trim \
+clone6N1_1.fq.gz clone6N1_2.fq.gz &
+
+trim_galore --paired --illumina -q 20 --fastqc -o /home/asia/SC_1_KO_Rep_Enrich/fastq_trim \
+clone6N2_1.fq.gz clone6N2_2.fq.gz &
+
+
+###to remove a folder write rmdir -r name
+###to run the trim_galore you need to make sure that you are currently in the folder where the files are otherwise it wont be able to
+find it as you dont provide the path to your files
