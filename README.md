@@ -1,5 +1,5 @@
-# asia_wardyn
+# RepEnrich B clel lymphoma project SC-1 data
 RepEnrich analysis on paired end RNA-Seq data
-#step1 trim_galore- adaptor and quality trimming of reads
+
 
 *****************************************
