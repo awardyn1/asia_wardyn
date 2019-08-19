@@ -16,57 +16,57 @@
 
 #from the example above you do as below
 #LCV2 control 1 and 2
-python /home/asia/tools/RepEnrich/RepEnrich.py \ 
-/home/asia/Repeatmasker_hg38/hg38_repeatmasker_clean.txt.gz \ 
+python /home/asia/tools/RepEnrich/RepEnrich.py \
+/home/asia/Repeatmasker_hg38/hg38_repeatmasker_clean.txt.gz \
 /home/asia/RepEnrich/ \
 LCV2_N1 \
-/home/asia/Repeatmasker_hg38/RepEnrich_setup_hg38.tar.gz
-/home/asia/bowtie_output/LCV2_N1_multimap_1.fastq --fastqfile2
-/home/asia/bowtie_output/LCV2_N1_multimap_2.fastq
+/home/asia/Repeatmasker_hg38/RepEnrich_setup_hg38.tar.gz \
+/home/asia/bowtie_output/LCV2_N1_multimap_1.fastq --fastqfile2 \
+/home/asia/bowtie_output/LCV2_N1_multimap_2.fastq \
 /home/asia/bowtie_output/LCV2_N1_uniquely.sam --cpus 16 --pairedend TRUE
 
 
-python /home/asia/tools/RepEnrich/RepEnrich.py \ 
-/home/asia/Repeatmasker_hg38/hg38_repeatmasker_clean.txt.gz \ 
+python /home/asia/tools/RepEnrich/RepEnrich.py \
+/home/asia/Repeatmasker_hg38/hg38_repeatmasker_clean.txt.gz \
 /home/asia/RepEnrich/ \
 LCV2_N2 \
-/home/asia/Repeatmasker_hg38/RepEnrich_setup_hg38.tar.gz
-/home/asia/bowtie_output/LCV2_N2_multimap_1.fastq --fastqfile2
-/home/asia/bowtie_output/LCV2_N2_multimap_2.fastq
+/home/asia/Repeatmasker_hg38/RepEnrich_setup_hg38.tar.gz \
+/home/asia/bowtie_output/LCV2_N2_multimap_1.fastq --fastqfile2 \
+/home/asia/bowtie_output/LCV2_N2_multimap_2.fastq \
 /home/asia/bowtie_output/LCV2_N2_uniquely.sam --cpus 16 --pairedend TRUE
 
 #KO clone 5 N1 and N2
-python /home/asia/tools/RepEnrich/RepEnrich.py \ 
-/home/asia/Repeatmasker_hg38/hg38_repeatmasker_clean.txt.gz \ 
+python /home/asia/tools/RepEnrich/RepEnrich.py \
+/home/asia/Repeatmasker_hg38/hg38_repeatmasker_clean.txt.gz \
 /home/asia/RepEnrich/ \
 clone5_N1 \
-/home/asia/bowtie_output/clone5N1_multimap_1.fastq --fastqfile2
-/home/asia/bowtie_output/clone5N1_multimap_2.fastq
+/home/asia/bowtie_output/clone5N1_multimap_1.fastq --fastqfile2 \
+/home/asia/bowtie_output/clone5N1_multimap_2.fastq \
 /home/asia/bowtie_output/clone5N1_uniquely.sam --cpus 16 --pairedend TRUE
 
-python /home/asia/tools/RepEnrich/RepEnrich.py \ 
-/home/asia/Repeatmasker_hg38/hg38_repeatmasker_clean.txt.gz \ 
+python /home/asia/tools/RepEnrich/RepEnrich.py \
+/home/asia/Repeatmasker_hg38/hg38_repeatmasker_clean.txt.gz \
 /home/asia/RepEnrich/ \
 clone5_N2 \
-/home/asia/bowtie_output/clone5N2_multimap_1.fastq --fastqfile2
-/home/asia/bowtie_output/clone5N2_multimap_2.fastq
+/home/asia/bowtie_output/clone5N2_multimap_1.fastq --fastqfile2 \
+/home/asia/bowtie_output/clone5N2_multimap_2.fastq \
 /home/asia/bowtie_output/clone5N2_uniquely.sam --cpus 16 --pairedend TRUE
 
 #KO clone 6 N1 and N2
-python /home/asia/tools/RepEnrich/RepEnrich.py \ 
-/home/asia/Repeatmasker_hg38/hg38_repeatmasker_clean.txt.gz \ 
+python /home/asia/tools/RepEnrich/RepEnrich.py \
+/home/asia/Repeatmasker_hg38/hg38_repeatmasker_clean.txt.gz \
 /home/asia/RepEnrich/ \
 clone6_N1 \
-/home/asia/bowtie_output/clone6N1_multimap_1.fastq --fastqfile2
-/home/asia/bowtie_output/clone6N1_multimap_2.fastq
+/home/asia/bowtie_output/clone6N1_multimap_1.fastq --fastqfile2 \
+/home/asia/bowtie_output/clone6N1_multimap_2.fastq \
 /home/asia/bowtie_output/clone6N1_uniquely.sam --cpus 16 --pairedend TRUE
 
-python /home/asia/tools/RepEnrich/RepEnrich.py \ 
-/home/asia/Repeatmasker_hg38/hg38_repeatmasker_clean.txt.gz \ 
+python /home/asia/tools/RepEnrich/RepEnrich.py \
+/home/asia/Repeatmasker_hg38/hg38_repeatmasker_clean.txt.gz \
 /home/asia/RepEnrich/ \
 clone6_N2 \
-/home/asia/bowtie_output/clone6N2_multimap_1.fastq --fastqfile2
-/home/asia/bowtie_output/clone6N2_multimap_2.fastq
+/home/asia/bowtie_output/clone6N2_multimap_1.fastq --fastqfile2 \
+/home/asia/bowtie_output/clone6N2_multimap_2.fastq \
 /home/asia/bowtie_output/clone6N2_uniquely.sam --cpus 16 --pairedend TRUE
 
 
