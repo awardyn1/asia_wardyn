@@ -1,0 +1,5 @@
+bowtie /home/asia/genome_hg38/hg38 -p 16 -t -m 1 -S --chunkmbs 4000 \
+--max /home/asia/bowtie_output/LCV2_N1_multimap_test.fastq \
+-1 <( zcat /home/asia/SC_1_KO_Rep_Enrich/fastq_trim/LCV2N1_1_val_1.fq.gz ) \
+-2 <( zcat /home/asia/SC_1_KO_Rep_Enrich/fastq_trim/LCV2N1_2_val_2.fq.gz ) \
+/home/asia/bowtie_output/LCV2_N1_uniquely_test.sam &>  /home/asia/LCV2_N1_test.log.txt
