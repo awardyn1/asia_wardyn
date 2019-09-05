@@ -1,0 +1,86 @@
+
+#The analysis below is performed in DESeq2 and uses different normalisaiton to the edgeR
+#we have used it as an alternative because we didnt have the count numbers for the reads 
+#obtained after the bowtie alingment
+#This analysis does need the total library reads -it uses only the total mapped ERV reads
+
+
+source("http://bioconductor.org/biocLite.R")
+biocLite("DESeq2")
+library('DESeq2')
+library(gplots)
+library(factoextra)
+install.packages("factoextra")
+library(RColorBrewer)
+options(scipen=999)
+
+# In the case of a pre-assembled file of the fraction count output do the following:
+# counts <- read.csv(file = "counts.csv")
+
+# In the case of seperate outputs, load the RepEnrich results - fraction counts
+LCV2_1 <- read.delim('LCV2_N1_fraction_counts.txt', header=FALSE)
+LCV2_2 <- read.delim('LCV2_N2_fraction_counts.txt', header=FALSE)
+clone5_1 <- read.delim('clone5_N1_fraction_counts.txt', header=FALSE)
+clone5_2 <- read.delim('clone5_N2_fraction_counts.txt', header=FALSE)
+clone6_1 <- read.delim('clone6_N1_fraction_counts.txt', header=FALSE)
+clone6_2 <- read.delim('clone6_N2_fraction_counts.txt', header=FALSE)
+
+# Build a counts table
+#remember the format of selecting [rown, column] with brackets
+
+counts <- data.frame(
+  row.names = LCV2_1[,1],
+  LCV2_1 = LCV2_1[,4], LCV2_2 = LCV2_2[,4], clone5_1 = clone5_1[,4],
+  clone5_2 = clone5_2[,4], clone6_1 = clone6_1[,4], clone6_2 = clone6_2[,4]
+)
+
+#you ned to create a covariate for the DeSeq2 to take into account, this one is comparing WT
+#vs other two KO cells, the place in bracket corresponds to places after ',' in the data frame
+#that we have just created
+
+#version 1: WT vs KO1 and KO2 seperately
+covariates<-data.frame(A3G_status=c("WT","WT","KO1","KO1","KO2","KO2") )
+
+#DeseQ2 only requires three variables to work with counts, covariates, and what you are
+#basing your analysis on
+
+dds <- DESeqDataSetFromMatrix(countData = counts, colData = covariates,
+                              design = ~ A3G_status)
+
+
+dLRT_vsd <- varianceStabilizingTransformation(dds)
+
+#can plot PCA analysis
+plotPCA(dLRT_vsd,ntop=50000,intgroup=c("A3G_status"))
+
+
+
+#version 2: WT vs KO (KO as replicates)
+
+covariates<-data.frame(A3G_status=c("WT","WT","KO","KO","KO","KO") )
+dds <- DESeqDataSetFromMatrix(countData = counts, colData = covariates,
+                              design = ~ A3G_status)
+dds <- DESeq(dds)
+dds_res = results(dds,contrast=c("A3G_status","KO","WT"))
+table(dds_res$padj<0.05)
+head(dds_res)
+
+
+
+#version 3 WT vs KO6
+#first create a new data frame that contains only WT and KO6
+subcounts <- data.frame(
+  row.names = LCV2_1[,1],
+  LCV2_1 = LCV2_1[,4], LCV2_2 = LCV2_2[,4], clone6_1 = clone6_1[,4], clone6_2 = clone6_2[,4]
+)
+
+
+dds <- DESeqDataSetFromMatrix(countData = subcounts, 
+                              colData = data.frame(A3G_status=c("WT","WT","KO","KO")),
+                              design = ~ A3G_status)
+dds <- DESeq(dds)
+dds_res = results(dds,contrast=c("A3G_status","KO","WT"))
+table(dds_res$padj<0.05)
+
+dds_res_noNA <- dds_res[!is.na(dds_res$pvalue),]
+dds_res_noNA[dds_res_noNA$padj<0.05,]
