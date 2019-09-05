@@ -1,3 +1,11 @@
+#This code is for pair end RNA-sequencing libraries from human RNA-Seq
+#-p is the processor occumapny, CSI has 42(?) cores so you dont want to clogg it all up
+#bowtie genome alingment to single and multimap reads
+#do it for all your biological repeats seperately
+#you want to create a log file at the end (VERY IMPORTANT) as you will use that to normalise your data in EdgeR later
+
+
+
 bowtie /home/asia/genome_hg38/hg38 -p 16 -t -m 1 -S --chunkmbs 4000 \
 --max /home/asia/bowtie_output/LCV2_N1_multimap_test.fastq \
 -1 <( zcat /home/asia/SC_1_KO_Rep_Enrich/fastq_trim/LCV2N1_1_val_1.fq.gz ) \
