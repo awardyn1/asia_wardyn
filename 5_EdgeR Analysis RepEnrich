@@ -1,0 +1,132 @@
+# EdgeR example
+#This is the code from RepEnrich group it needs to modified with correct names of variables
+# Setup - Install and load edgeR
+source("http://bioconductor.org/biocLite.R")
+biocLite("edgeR")
+library('edgeR')
+
+# In the case of a pre-assembled file of the fraction count output do the following:
+# counts <- read.csv(file = "counts.csv")
+
+# In the case of seperate outputs, load the RepEnrich results - fraction counts
+LCV2_1 <- read.delim('LCV2_N1_fraction_counts.txt', header=FALSE)
+LCV2_2 <- read.delim('LCV2_N2_fraction_counts.txt', header=FALSE)
+clone5_1 <- read.delim('clone5_N1_fraction_counts.txt', header=FALSE)
+clone5_2 <- read.delim('clone5_N2_fraction_counts.txt', header=FALSE)
+clone6_1 <- read.delim('clone6_N1_fraction_counts.txt', header=FALSE)
+clone6_2 <- read.delim('clone6_N2_fraction_counts.txt', header=FALSE)
+
+
+#' Build a counts table
+#' #first column is name
+
+counts <- data.frame(
+  row.names = LCV2_1[,1],
+  LCV2_1 = LCV2_1[,4], LCV2_2 = LCV2_2[,4], clone5_1 = clone5_1[,4],
+  clone5_2 = clone5_2[,4], clone6_1 = clone6_1[,4], clone6_2 = clone6_2[,4]
+)
+
+
+# Build a meta data object. I am comparing young, old, and veryold mice.
+# I manually input the total mapping reads for each sample.
+# The total mapping reads are calculated using the bowtie logs:
+# # of reads processed - # reads that failed to align, in attached Excel sheet
+meta <- data.frame(
+  row.names=colnames(counts),
+  condition=c('WT',"WT","KO","KO","KO","KO"),
+  libsize=c(12273146, 13168940, 12520422, 14200224, 14597333, 12295254)
+)
+
+# Define the library size and conditions for the GLM
+libsize <- meta$libsize
+condition <- factor(meta$condition)
+design <- model.matrix(~0+condition)
+colnames(design) <- levels(meta$condition)
+
+
+# Build a DGE object for the GLM
+y <- DGEList(counts=counts, lib.size=libsize)
+
+# Normalize the data
+y <- calcNormFactors(y)
+y$samples
+plotMDS(y)
+
+# Estimate the variance
+y <- estimateGLMCommonDisp(y, design)
+y <- estimateGLMTrendedDisp(y, design)
+y <- estimateGLMTagwiseDisp(y, design)
+plotBCV(y)
+
+# Build an object to contain the normalized read abundance
+logcpm <- cpm(y, log=TRUE, lib.size=libsize)
+logcpm <- as.data.frame(logcpm)
+colnames(logcpm) <- factor(meta$condition)
+
+
+# Conduct fitting of the GLM
+yfit <- glmFit(y, design)
+
+# Initialize result matrices to contain the results of the GLM
+results <- matrix(nrow=dim(counts)[1],ncol=0)
+logfc <- matrix(nrow=dim(counts)[1],ncol=0)
+
+# Make the comparisons for the GLM
+my.contrasts <- makeContrasts(
+  WT_KO = WT-KO,
+  KO_WT = KO-WT,
+  levels = design
+)
+
+# Define the contrasts used in the comparisons
+allcontrasts = c(
+  "WT_KO",
+  "WT_KO",
+  "NO_DIFF"
+)
+
+# Conduct a for loop that will do the fitting of the GLM for each comparison
+# Put the results into the results objects
+for(current_contrast in allcontrasts) {
+  lrt <- glmLRT(yfit, contrast=my.contrasts[,current_contrast])
+  plotSmear(lrt, de.tags=rownames(y))
+  title(current_contrast)
+  res <- topTags(lrt,n=dim(c)[1],sort.by="none")$table
+  colnames(res) <- paste(colnames(res),current_contrast,sep=".")
+  results <- cbind(results,res[,c(1,5)])
+  logfc <- cbind(logfc,res[c(1)])
+}
+
+
+# Add the repeat types back into the results.
+# We should still have the same order as the input data
+results$class <- LCV2_1[,2]
+results$type <- LCV2_1[,3]
+
+
+# Sort the results table by the logFC
+results <- results[with(results, order(-abs(logFC.WT_KO))), ]
+
+
+
+# Save the results
+write.table(results, 'results.txt', quote=FALSE, sep="\t")
+
+
+# Plot Fold Changes for repeat classes and types
+for(current_contrast in allcontrasts) {
+  logFC <- results[, paste0("logFC.", current_contrast)]
+}
+  # Plot the repeat classes
+  classes <- with(results, reorder(class, -logFC, median))
+  par(mar=c(6,10,4,1))
+  boxplot(logFC ~ classes, data=results, outline=FALSE, horizontal=TRUE,
+          las=2, xlab="log(Fold Change)", main=current_contrast)
+  abline(v=0)
+  # Plot the repeat types
+  types <- with(results, reorder(type, -logFC, median))
+  boxplot(logFC ~ types, data=results, outline=FALSE, horizontal=TRUE,
+          las=2, xlab="log(Fold Change)", main=current_contrast)
+  abline(v=0)
+
+    
