@@ -23,12 +23,50 @@ You can download it directly from the website, into your tool folder. Now you ne
 2. Edit the .bashrc file -type- more .bashrc
 (is an invisible file in your home directory on the server, all invisible files start with ‘.’)
 2. Now you have opened your .bashrc you can scroll to the very bottom.
-3. To enter any text type- i- for insert, now you wil lbe able to type inside. This is an example of the path I have written in my .bashrc 
+3. To enter any text type: i   (for insert). now you wil lbe able to type inside. This is an example of the path I have written in my .bashrc 
 
 PATH=$PATH:/home/asia/tools/FastQC:/home/asia/tools/TrimGalore:/home/asia/tools/
 
 4. If you dont want to type manually. Before you open the .bashrc, enter your tools folder again type- ls-
 This will give a list of files in the directory, make sure your TrimGalore is there. If it is there, type- pwd- Enter. That will give you the path to the directory where you are currently, whcih is also the path to TrimGalore. Copy the link- right click- great now you can use that in your path back in the .bashrc. Once you ready to insert type - PATH=$PATH:(copy your link here)
-5. Now save the file by typing- :w
-6. Quit the file by typing- :q
+5. Now save the file by typing: :w
+6. Quit the file by typing: :q
+
+
+And thats it, you are nearly ready to run TrimGalore. You may want to familiarise yourself with TrimGalore manual. If you like you can do that by typing- trim_galore --help (that will open the manual).
+The code to the TrimGalore is included in file n#1. In a nuthell the parameters that are written mean e.g.:
+
+#Code:
+
+trim_galore --paired --illumina -q 20 --fastqc -o /home/asia/SC_1_KO_Rep_Enrich/fastq_trim \
+LCV2N1_1.fq.gz LCV2N1_2.fq.gz &
+
+#Exmplanation:
+#The –o is the path to the directory where the data will be stored
+#--illumina- is saying illumine barcodes were used and will be trimmed
+#-q 20 is anything below 20% quality mean will be trimmed off
+#--fastq- is the file that you are putting in
+#My library was paired ended hence I have two files: LCV2N1_1.fq.gz and LCV2N1_1.fq.gz (if you have single end read library, you may have to edit the code according to the creator of RepEnrich:
+https://github.com/nskvir/RepEnrich
+
+
+So you have your raw files downloaded, the trim_galore and cutadapt and fastqc is ready in your Tools directory. Last thing... if yu simply want to run the code you edited from file #1 (trim_galore) you should save it (with the corrected directory and file names that will correspond to your situation) in a .bash file. Bash is like a notebook that will simply store the code, then if you want to run the code stored in .bash you simply call its name (well just read below how). To create one follow steps below:
+A) Type- vim trim_galore.bash
+B) This will open a notebook-like window (similar to .bashrc), now type- i
+C) you are now able to insert the copied code
+D) type: :w (to save)
+E) type: :q (to quit)
+
+
+And thats it, done!
+
+Now to run your code (even after you log out), you need to run it in so called "screen" so its running in the background.
+Its super easy to open a screen in Putty. Simply type:  screen -s name (name it something e.g. trimgalore). If you want to double check the screen that you have created is attached just type: screen -r name (whatever you called it before) and the system will give you the info about the opened screens that your user is using.
+Great so you are in the screen now. Last and simpliest thing you have to do type: bash trim_galore (if thats the name of the vim file with the code you have created) and press: ENTER
+Now you can exit the screen (it wont stop running the code) by pressing: Ctr+A, Ctr+D (if you make a mistake and type Ctr+D, Ctr+D your screen is killed... so be careful not to mix these up). 
+If you want to check if your code is running just type: htop  
+That will show you the processes associated with your server activity and your trim_galore should be there. To exit this window type: Ctr+C
+and you should be back in home directory, you can now close Putty and relax until your trim_galore is done
+
+
 
