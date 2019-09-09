@@ -13,6 +13,11 @@ Yay- you are in! Congratulaitons on your first empty black screen!
 
 Now it gets a bit trickier. You need to make sure you have all the required dependencies downloaded in order to run RepEnrich pipeline. Step1 is to clean up your raw data and trim the reads to remove barcodes and poor quality reads. To do this you will need a tool celled TrimGalore. To keep your dependencies in one place you you can create a new folder: "Tools". Now to create a new directory in putty simply type- mkdir Tools- and thats it.
 To enter it type- cd Tools- end enter.
+Please read this Readme file from the creator of trim galore for instructions how to download and the unser manual:
+https://github.com/FelixKrueger/TrimGalore
+
+
+
 To run the trim galore- you will need to download the trim_galore itself + cutadapt + fastqc- only when you have these three files in the folder the trimming of the adapter sequences and trimming bad quality data (below 20%) will be performed
 The required dependencies and links are:
 https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/
