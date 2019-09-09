@@ -11,51 +11,52 @@ Download Putty to operate within the shell environment, log in with a user name 
 Yay- you are in! Congratulaitons on your first empty black screen! 
 
 
-Now it gets a bit trickier. You need to make sure you have all the required dependencies downloaded in order to run RepEnrich pipeline. Step1 is to clean up your raw data and trim the reads to remove barcodes and poor quality reads. To do this you will need a tool celled TrimGalore. To keep your dependencies in one place you you can create a new folder: "Tools". Now to create a new directory in putty simply type- mkdir Tools- and thats it.
-To enter it type- cd Tools- end enter.
+Now it gets a bit trickier. You need to make sure you have all the required dependencies downloaded in order to run RepEnrich pipeline. Step1 is to clean up your raw data and trim the reads to remove poor quality reads. To do this you will need a tool called TrimGalore. To keep your dependencies in one place you can create a new folder: "Tools". Now to create a new directory in putty simply type: mkdir Tools     ->and thats it.
+To enter the directory type: cd Tools    -> end enter.
 Please read this Readme file from the creator of trim galore for instructions how to download and the unser manual:
 https://github.com/FelixKrueger/TrimGalore
 
 
 
-To run the trim galore- you will need to download the trim_galore itself + cutadapt + fastqc- only when you have these three files in the folder the trimming of the adapter sequences and trimming bad quality data (below 20%) will be performed
+To run the trim galore- you will need to download the trim_galore itself + cutadapt + fastqc- only when you have these three files are installed the trimming of the adapter sequences and trimming bad quality data (below 20%) will be performed
 The required dependencies and links are:
 https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/
 https://github.com/FelixKrueger/TrimGalore/releases
 
-You can download it directly from the website, into your tool folder. Now you need to link it to the .bashrc file in order to make it executable. You need t ocreate a path to the TrimGalore that you have just downloaded in the .bashrc file. The instructions below include some basic commands to operate in Putty (whcih is a Linux based system). 
-1. Once you are in your home directory you can open the .bashrc file. If you are unsure that you are just type -cd-. That will take you to your home directory.
-2. Edit the .bashrc file -type- more .bashrc
-(is an invisible file in your home directory on the server, all invisible files start with ‘.’)
-2. Now you have opened your .bashrc you can scroll to the very bottom.
-3. To enter any text type: i   (for insert). now you wil lbe able to type inside. This is an example of the path I have written in my .bashrc 
+You can download it directly from the website, into your tool folder. Now you need to link it to the .bashrc file in order to make it executable in the shell. You need to create a path to the TrimGalore that you have just downloaded in the executable .bashrc file. The instructions below include some basic commands to operate in Putty (whcih is a Linux based system):
+1. Once you are in your home directory you can open the .bashrc file. If you are unsure that you are just type: cd. That will take you to your home directory. You can type: ls   -> to check the list of available folders and files.
+2. Edit the .bashrc file type: more .bashrc
+(.bashrc is an invisible file in your home directory, all invisible files start with ‘.’)
+3. Now you have opened your .bashrc you can scroll to the very bottom of the file (you can only operate with arrows and Enter)
+4. To enter any text at the very end of .bashrc type: i   (for insert). now you will able to type inside. This is an example of the path I have written in my .bashrc to link FastQC and TrimGalore tools:
 
 PATH=$PATH:/home/asia/tools/FastQC:/home/asia/tools/TrimGalore:/home/asia/tools/
 
-4. If you dont want to type manually. Before you open the .bashrc, enter your tools folder again type- ls-
-This will give a list of files in the directory, make sure your TrimGalore is there. If it is there, type- pwd- Enter. That will give you the path to the directory where you are currently, whcih is also the path to TrimGalore. Copy the link- right click- great now you can use that in your path back in the .bashrc. Once you ready to insert type - PATH=$PATH:(copy your link here)
-5. Now save the file by typing: :w
-6. Quit the file by typing: :q
+5. Note: If you dont want to type manually, before you open the .bashrc, enter your tools folder again type: ls
+This will give a list of files in the directory, make sure your TrimGalore is there. If it is there, type- pwd- Enter. That will give you the path to the directory where you are currently in, which is also the path to TrimGalore. Copy the link: right click. Great now you can use that in your path back in the .bashrc. Once you ready to insert type - PATH=$PATH:(copy your link here)
+5. Once you are done with the Path, press: ESC. 
+6. Now save the file by typing: :w
+7. Quit the file by typing: :q
 
 
-And thats it, you are nearly ready to run TrimGalore. You may want to familiarise yourself with TrimGalore manual. If you like you can do that by typing- trim_galore --help (that will open the manual).
-The code to the TrimGalore is included in file n#1. In a nuthell the parameters that are written mean e.g.:
+And thats it, you are nearly ready to run TrimGalore. You may want to familiarise yourself with TrimGalore manual. If you like you can do that by typing: trim_galore --help (that will open the manual).
+The code to the TrimGalore is included in file n#1. In a nutshell the parameters that are written mean e.g.:
 
 #Code:
 
 trim_galore --paired --illumina -q 20 --fastqc -o /home/asia/SC_1_KO_Rep_Enrich/fastq_trim \
 LCV2N1_1.fq.gz LCV2N1_2.fq.gz &
 
-#Exmplanation:
+#Explanation:
 #The –o is the path to the directory where the data will be stored
 #--illumina- is saying illumine barcodes were used and will be trimmed
 #-q 20 is anything below 20% quality mean will be trimmed off
 #--fastq- is the file that you are putting in
-#My library was paired ended hence I have two files: LCV2N1_1.fq.gz and LCV2N1_1.fq.gz (if you have single end read library, you may have to edit the code according to the creator of RepEnrich:
-https://github.com/nskvir/RepEnrich
+#My library was paired ended hence I have two files: LCV2N1_1.fq.gz and LCV2N1_1.fq.gz (if you have single end read library, you may #have to edit the code according to the creator of RepEnrich:
+#https://github.com/nskvir/RepEnrich
+#more TrimGalore options can be found in the manual
 
-
-So you have your raw files downloaded, the trim_galore and cutadapt and fastqc is ready in your Tools directory. Last thing... if yu simply want to run the code you edited from file #1 (trim_galore) you should save it (with the corrected directory and file names that will correspond to your situation) in a .bash file. Bash is like a notebook that will simply store the code, then if you want to run the code stored in .bash you simply call its name (well just read below how). To create one follow steps below:
+So you have your raw RNASeq files downloaded, the trim_galore and cutadapt and fastqc is ready in your Tools directory. Last thing... if you simply want to run the code you edited from file #1 (trim_galore) you should save it (with the corrected directory and file names that will correspond to your situation) in a .bash file. Bash is like a notebook that will simply store the code, then if you want to run the code stored in .bash you simply call its name (well just read below how). To create one follow steps below:
 A) Type- vim trim_galore.bash
 B) This will open a notebook-like window (similar to .bashrc), now type: i
 C) you are now able to insert the copied code
@@ -73,6 +74,13 @@ Now you can exit the screen (it wont stop running the code) by pressing: Ctr+A, 
 If you want to check if your code is running just type: htop  
 That will show you the processes associated with your server activity and your trim_galore should be there. To exit this window type: Ctr+C
 and you should be back in home directory, you can now close Putty and relax until your trim_galore is done
+
+
+NOTE: IMPORTANT:
+In the code you will be writing in this Tutorial, whenever you refer to the target files you may or may not provide the full path to their location. That will depend on where are you executing the code (literally). In my example the input files are not linked to any path, this means that I can only run the trimgalore.bash once I physically enter the folder where my files are located! If you wont do that, without providing a path to the input files the trimgalore.bash wont be able to find it! Importantly, your trimgalore.bash file (or whatever you have called it) should also be located in the same folder as the input files.
+Alternatively, you can simply provide the path to EACH of the input file and that should solve any problems. Just keep that in mind since I have spent a while trying to figure this one out! That is a linux operating basic ladies and gentleman! :-) You are getting there.
+
+
 
 
 
