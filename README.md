@@ -52,16 +52,17 @@ https://github.com/nskvir/RepEnrich
 
 So you have your raw files downloaded, the trim_galore and cutadapt and fastqc is ready in your Tools directory. Last thing... if yu simply want to run the code you edited from file #1 (trim_galore) you should save it (with the corrected directory and file names that will correspond to your situation) in a .bash file. Bash is like a notebook that will simply store the code, then if you want to run the code stored in .bash you simply call its name (well just read below how). To create one follow steps below:
 A) Type- vim trim_galore.bash
-B) This will open a notebook-like window (similar to .bashrc), now type- i
+B) This will open a notebook-like window (similar to .bashrc), now type: i
 C) you are now able to insert the copied code
-D) type: :w (to save)
-E) type: :q (to quit)
+D) Press: Esc
+E) type: :w (to save)
+F) type: :q (to quit)
 
 
 And thats it, done!
 
 Now to run your code (even after you log out), you need to run it in so called "screen" so its running in the background.
-Its super easy to open a screen in Putty. Simply type:  screen -s name (name it something e.g. trimgalore). If you want to double check the screen that you have created is attached just type: screen -r name (whatever you called it before) and the system will give you the info about the opened screens that your user is using.
+Its super easy to open a screen in Putty. Simply type:  screen -S name (name it something e.g. trimgalore). If you want to double check the screen that you have created is attached just type: screen -r name (whatever you called it before) and the system will give you the info about the opened screens that your user is using.
 Great so you are in the screen now. Last and simpliest thing you have to do type: bash trim_galore (if thats the name of the vim file with the code you have created) and press: ENTER
 Now you can exit the screen (it wont stop running the code) by pressing: Ctr+A, Ctr+D (if you make a mistake and type Ctr+D, Ctr+D your screen is killed... so be careful not to mix these up). 
 If you want to check if your code is running just type: htop  
