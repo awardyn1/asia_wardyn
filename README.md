@@ -1,3 +1,8 @@
+Step by Step workflow for RepEnrich Analysis for Dummies
+based on original protocol by Steven Criscione:
+https://github.com/nskvir/RepEnrich
+
+
 # RepEnrich analysis on B cell lymphoma RNA-Seq
 RepEnrich analysis on paired end RNA-Seq data
 
@@ -5,11 +10,15 @@ RepEnrich analysis on paired end RNA-Seq data
 *****************************************
 Step by step tutorial for dummies that have no idea how to make their way into operating shell environment and R studio console
 
+Step 1: Setting up Working in the Shell Console- Putty
+
 Before starting you should ask any kind bioinformatician that is wiling to help you to share some space on your institution's server with you. The kind altruist should also make sure you will not do any damage to the folders situated outside of your own:)
 I personally used Fila Zilla to download the raw RNA-seq files into the server. It should be linked to the server you operate in (if unsure how to do it, where to get the IP address just ask the altruist bioinformatician that set you up in the first place). In File Zilla, go to the icon on the left top corner (Open the Site Manager), here you can link to the correct server number and port number, set up your username and passord and make sure you are using the correct protocol for entry: SFTP: SSH File Transfer Protocol. Thats all you really need. These parameters should be saved up for your next log on. It will allow you to access the shell using Putty with the login and password that you have chosen. In File zilla you can actually create folders and just drag and drop your raw data so its available for the analysis, it may take a while.
 Download Putty to operate within the shell environment, log in with a user name and passord that you had set up.
 Yay- you are in! Congratulaitons on your first empty black screen! 
 
+
+Step 3- TrimGalore RNASeq data cleanup
 
 Now it gets a bit trickier. You need to make sure you have all the required dependencies downloaded in order to run RepEnrich pipeline. Step1 is to clean up your raw data and trim the reads to remove poor quality reads. To do this you will need a tool called TrimGalore. To keep your dependencies in one place you can create a new folder: "Tools". Now to create a new directory in putty simply type: mkdir Tools     ->and thats it.
 To enter the directory type: cd Tools    -> end enter.
@@ -81,6 +90,11 @@ In the code you will be writing in this Tutorial, whenever you refer to the targ
 Alternatively, you can simply provide the path to EACH of the input file and that should solve any problems. Just keep that in mind since I have spent a while trying to figure this one out! That is a linux operating basic ladies and gentleman! :-) You are getting there.
 
 
+
+Step 2: Bowtie alingment
+
+For bowtie alinmgment we need to align the RNAseq reads to the human (in this case) genome hg38. Creata folder in your home directory called human_genome_hg38: mkdir human_genome_hg38
+Then download the genome data:
 
 
 
